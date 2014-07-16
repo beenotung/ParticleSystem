@@ -8,7 +8,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
-
+ 
 public abstract class SimpleCanvas extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
@@ -25,7 +25,9 @@ public abstract class SimpleCanvas extends Canvas implements Runnable {
 	private BufferedImage image;
 	protected int[] pixels;
 
-	private int tickCount = 0;
+	protected int tickCount = 0;
+	protected int ticks = 0;
+	protected int renders = 0;
 	double nsPerTick;
 	double nsPerRender;
 
@@ -57,8 +59,6 @@ public abstract class SimpleCanvas extends Canvas implements Runnable {
 	@Override
 	public void run() {
 		init();
-		int ticks = 0;
-		int renders = 0;
 		long lastTime = System.nanoTime();
 		long currentTime;
 		double deltaTick = 0;
@@ -71,16 +71,26 @@ public abstract class SimpleCanvas extends Canvas implements Runnable {
 			deltaRender += (currentTime - lastTime) / nsPerRender;
 			lastTime = currentTime;
 			if (deltaTick > 0) {
+				System.out.println("deltatick: "+deltaTick);
+				System.out.println("ticks "+ticks+" start");				
 				ticks++;
 				tick();
 				deltaTick--;
 				shouldRender = true;
+				System.out.println("ticks "+ticks+" end");
 			}
 			if ((deltaRender > 0) && (shouldRender)) {
+				System.out.println("deltaRender: "+deltaRender);
+				System.out.println("renders "+renders+" start");
+				System.out.println("renders++;");
 				renders++;
+				System.out.println("render();");
 				render();
+				System.out.println("deltaRender--;");
 				deltaRender--;
+				System.out.println("shouldRender = false;");
 				shouldRender = false;
+				System.out.println("renders "+renders+" end");
 			}
 
 			if (System.currentTimeMillis() - lastDebug >= 1000) {
@@ -103,18 +113,24 @@ public abstract class SimpleCanvas extends Canvas implements Runnable {
 	protected abstract void mytick();
 
 	private void render() {
+		System.out.println("1");
 		BufferStrategy bufferStrategy = getBufferStrategy();
 		if (bufferStrategy == null) {
 			createBufferStrategy(3);
 			return;
 		}
-
+		
+		System.out.println("2");
 		clear(pixels);
+		System.out.println("3");
 		myrender();
 
+		System.out.println("4");
 		Graphics graphics = bufferStrategy.getDrawGraphics();
 		graphics.drawImage(image, 0, 0, frame.getWidth(), frame.getHeight(), null);
 		// graphics.drawImage(image,0,0,WIDTH,HEIGHT,0,0,WIDTH,HEIGHT,frame);
+		
+		System.out.println("5");
 		graphics.dispose();
 		bufferStrategy.show();
 	}

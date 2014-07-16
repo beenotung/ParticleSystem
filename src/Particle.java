@@ -8,7 +8,7 @@ public class Particle {
 	PVector velocity;
 	PVector acceleration;
 	float lifespan;
-
+ 
 	Particle(PVector l) {
 		location = l.get();
 		acceleration = new PVector();

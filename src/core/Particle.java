@@ -3,10 +3,10 @@ package core;
 import myutils.Vector2D;
 
 public class Particle {
-	Vector2D location;
-	Vector2D velocity;
-	Vector2D acceleration;
-	float lifespan;
+	protected Vector2D location;
+	protected Vector2D velocity;
+	protected Vector2D acceleration;
+	protected float lifespan;
 
 	Particle(Vector2D l) {
 		location = l.clone();

@@ -22,14 +22,17 @@ public class ParticleFrame extends CanvasShell {
 	@Override
 	protected void myTick() {
 		for (ParticleSystem ps : particleSystems) {
+			ps.checkAlive();
+			// for (int i = 0; i < 100; i++)
+			ps.addParticle();
 			ps.calc();
 		}
 		for (ParticleSystem ps : particleSystems) {
 			ps.move();
 		}
 		for (ParticleSystem ps : particleSystems) {
-			//ps.check_loop();
-			ps.check_rebound();			
+			// ps.check_loop();
+			ps.check_rebound();
 		}
 	}
 
@@ -44,7 +47,7 @@ public class ParticleFrame extends CanvasShell {
 	@Override
 	protected void myDebugInfo() {
 		// TODO Auto-generated method stub
-
+		// System.out.println(particleSystems.get(0).particles.size());
 	}
 
 }

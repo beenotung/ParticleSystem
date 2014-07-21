@@ -21,15 +21,18 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 	protected int WIDTH, HEIGHT, SCALE;
 	protected String TITLE;
 	protected double nsPerTick, nsPerRender;
+	protected int background = Colors.get(0, 0, 0);
 
 	protected JFrame frame;
 	protected Graphics graphics;
 	protected BufferStrategy bufferStrategy;
 	protected BufferedImage image;
-	protected int[] pixels;
+	protected Pixels screen;
+	protected int x, y, xPos, yPos;
 
-	public CanvasShell(int width, int height, int scale, String title, double nsPerTick,
-			double nsPerRender) {
+	protected KeyHandler keyHandler;
+
+	public CanvasShell(int width, int height, int scale, String title, double nsPerTick, double nsPerRender) {
 		WIDTH = width / scale;
 		HEIGHT = height / scale;
 		SCALE = scale;
@@ -51,11 +54,13 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 		frame.setVisible(true);
 
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-		pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+		screen = new Pixels(((DataBufferInt) image.getRaster().getDataBuffer()).getData());
 
 		createBufferStrategy(3);
 		bufferStrategy = getBufferStrategy();
 		graphics = bufferStrategy.getDrawGraphics();
+
+		keyHandler = new KeyHandler(this);
 	}
 
 	@Override
@@ -93,19 +98,36 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 
 	protected void tick() {
 		tickCount++;
+		defaultKeyHandling();
 		myTick();
+	}
+
+	private void defaultKeyHandling() {
+		if (keyHandler.up.pressed) {
+			screen.yOffset++;
+		}
+		if (keyHandler.down.pressed) {
+			screen.yOffset--;
+		}
+		if (keyHandler.left.pressed) {
+			screen.xOffset++;
+		}
+		if (keyHandler.right.pressed) {
+			screen.xOffset--;
+		}
 	}
 
 	protected void render() {
 		myRender();
+
 		graphics.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 		bufferStrategy.show();
 	}
 
 	protected void debugInfo() {
 		System.out.println(ticks + " TPS, " + renders + "FPS");
-		ticks = renders = 0;
 		myDebugInfo();
+		ticks = renders = 0;
 	}
 
 	protected abstract void init();
@@ -116,12 +138,6 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 
 	protected abstract void myDebugInfo();
 
-	protected void clear(int c){
-		for(int i=0;i<pixels.length;i++)
-			pixels[i]=c;
-	}
-	
-	
 	public synchronized void start() {
 		System.out.println("CanvasShell start");
 		running = true;

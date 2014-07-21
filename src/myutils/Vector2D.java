@@ -33,6 +33,20 @@ public class Vector2D {
 		return new Vector2D(x, y);
 	}
 
+	public double getMagnitude() {
+		return (Math.sqrt(x * x + y * y));
+	}
+
+	public void setMagnitude(double d) {
+		double r = getMagnitude() * d;
+		x *= r;
+		y *= r;
+	}
+
+	public void normalize() {
+		setMagnitude(1);
+	}
+
 	public void add(Vector2D pv) {
 		x += pv.x;
 		y += pv.y;

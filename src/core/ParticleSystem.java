@@ -3,21 +3,22 @@ package core;
 import java.util.ArrayList;
 
 import myutils.Colors;
+import myutils.Pixels;
 import myutils.Vector2D;
 import myutils.Utils;
 
 public class ParticleSystem {
 	protected int WIDTH, HEIGHT;
-	protected int[] pixels;
+	Pixels screen;
 
 	protected double REBOUNDRATIO = 0.90;
 
 	protected ArrayList<Particle> particles = new ArrayList<Particle>();
 
-	public ParticleSystem(int width, int height, int[] pixels) {
+	public ParticleSystem(int width, int height, Pixels screen) {
 		WIDTH = width;
 		HEIGHT = height;
-		this.pixels = pixels;
+		this.screen = screen;
 		init();
 	}
 
@@ -25,13 +26,13 @@ public class ParticleSystem {
 		addParticle();
 	}
 
-	protected void addParticle() {	
+	protected void addParticle() {
 		Vector2D l = new Vector2D(WIDTH / 2, HEIGHT / 2);
-		Vector2D v = new Vector2D();		
+		Vector2D v = new Vector2D();
 		Vector2D a = new Vector2D();
-		l.setRandom(WIDTH,HEIGHT);
+		l.setRandom(WIDTH, HEIGHT);
 		particles.add(new Particle(l, v, a));
-		//particles.get(particles.size()-1).lifespan=1024;
+		// particles.get(particles.size()-1).lifespan=1024;
 	}
 
 	protected void checkAlive() {
@@ -42,7 +43,7 @@ public class ParticleSystem {
 
 	protected void calc() {
 		for (Particle p : particles) {
-//p.acceleration.setRandom();
+			// p.acceleration.setRandom();
 		}
 	}
 
@@ -89,14 +90,14 @@ public class ParticleSystem {
 	protected void display() {
 		int x, y;
 		for (Particle p : particles) {
-			x = (int) Math.round(Math.floor(p.location.x));
-			y = (int) Math.round(Math.floor(p.location.y));
+			x = (int) Math.round(Math.floor(p.location.x)) + screen.xOffset;
+			y = (int) Math.round(Math.floor(p.location.y)) + screen.yOffset;
 			/*
 			 * while (x<0)x+=WIDTH; while (y<0)y+=HEIGHT; while
 			 * (x>=WIDTH)x-=WIDTH; while (y>=HEIGHT)y-=HEIGHT;
 			 */
-			pixels[x + y * WIDTH] = Colors.get(1, 0, 0);
+			if (Pixels.inside(x, y, 0, 0, WIDTH - 1, HEIGHT - 1))
+				screen.pixels[x + y * WIDTH] = Colors.get(1, 0, 0);
 		}
 	}
-
 }

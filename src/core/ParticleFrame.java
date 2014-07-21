@@ -16,7 +16,7 @@ public class ParticleFrame extends CanvasShell {
 
 	@Override
 	protected void init() {
-		particleSystems.add(new ParticleSystem(WIDTH, HEIGHT, pixels));
+		particleSystems.add(new ParticleSystem(WIDTH, HEIGHT, screen));
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class ParticleFrame extends CanvasShell {
 
 	@Override
 	protected void myRender() {
-		clear(Colors.get(0, 0, 0));
+		screen.clear(Colors.get(0, 0, 0));
 		for (ParticleSystem ps : particleSystems) {
 			ps.display();
 		}

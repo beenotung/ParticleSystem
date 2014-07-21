@@ -23,14 +23,18 @@ public class ParticleSystem {
 	}
 
 	protected void init() {
-		addParticle();
+		//addParticle();
 	}
 
+	protected void addParticle(Vector2D l,Vector2D v,Vector2D a) {		
+		particles.add(new Particle(l, v, a));
+	}
+	
 	protected void addParticle() {
 		Vector2D l = new Vector2D(WIDTH / 2, HEIGHT / 2);
 		Vector2D v = new Vector2D();
 		Vector2D a = new Vector2D();
-		l.setRandom(WIDTH, HEIGHT);
+		//l.setRandom(WIDTH, HEIGHT);
 		particles.add(new Particle(l, v, a));
 		// particles.get(particles.size()-1).lifespan=1024;
 	}

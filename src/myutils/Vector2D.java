@@ -15,18 +15,9 @@ public class Vector2D {
 	}
 
 	public void setRandom() {
-		x = Utils.random.nextDouble() * 2 - 1;
-		y = Utils.random.nextDouble() * 2 - 1;
-	}
-
-	public void setRandom(double r) {
-		x = (Utils.random.nextDouble() * 2 - 1) * r;
-		y = (Utils.random.nextDouble() * 2 - 1) * r;
-	}
-
-	public void setRandom(double xMax, double yMax) {
-		x = Utils.random.nextDouble() * xMax;
-		y = Utils.random.nextDouble() * yMax;
+		double d = Utils.random.nextDouble() * 2 * Math.PI;
+		x = Math.cos(d);
+		y = Math.sin(d);
 	}
 
 	public Vector2D clone() {
@@ -38,7 +29,11 @@ public class Vector2D {
 	}
 
 	public void setMagnitude(double d) {
-		double r = getMagnitude() * d;
+		if (getMagnitude() == 0) {
+			setRandom();
+			return;
+		}
+		double r = 1 / getMagnitude() * d;
 		x *= r;
 		y *= r;
 	}

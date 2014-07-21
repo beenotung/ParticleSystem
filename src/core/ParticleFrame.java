@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import myutils.CanvasShell;
 import myutils.Colors;
+import myutils.Vector2D;
 
 public class ParticleFrame extends CanvasShell {
 	private static final long serialVersionUID = 1L;
@@ -21,10 +22,16 @@ public class ParticleFrame extends CanvasShell {
 
 	@Override
 	protected void myTick() {
+		Vector2D l = new Vector2D(WIDTH / 2, HEIGHT / 2);
+		Vector2D v = new Vector2D();
+		Vector2D a = new Vector2D();
 		for (ParticleSystem ps : particleSystems) {
 			ps.checkAlive();
-			// for (int i = 0; i < 100; i++)
-			ps.addParticle();
+			for (int i = 0; i < 100; i++) {
+				v.setRandom();
+				// v.setMagnitude(1);
+				ps.addParticle(l, v, a);
+			}
 			ps.calc();
 		}
 		for (ParticleSystem ps : particleSystems) {

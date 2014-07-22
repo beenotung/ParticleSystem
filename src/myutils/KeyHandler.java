@@ -11,6 +11,7 @@ public class KeyHandler implements KeyListener {
 	public Key right = new Key();
 	public Key pageup = new Key();
 	public Key pagedown = new Key();
+	public Key equal = new Key();
 
 	public KeyHandler(CanvasShell canvasShell) {
 		canvasShell.addKeyListener(this);
@@ -55,6 +56,9 @@ public class KeyHandler implements KeyListener {
 			break;
 		case KeyEvent.VK_PAGE_DOWN:
 			pagedown.toggle(isPressed);
+			break;
+		case KeyEvent.VK_EQUALS:
+			equal.toggle(isPressed);
 			break;
 		default:
 			System.out.println("new keyCode" + keyCode);

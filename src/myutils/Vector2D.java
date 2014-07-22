@@ -1,10 +1,10 @@
 package myutils;
 
 public class Vector2D {
-	public double x;
-	public double y;
+	public float x;
+	public float y;
 
-	public Vector2D(double x, double y) {
+	public Vector2D(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -16,8 +16,8 @@ public class Vector2D {
 
 	public void setRandom() {
 		double d = Utils.random.nextDouble() * 2 * Math.PI;
-		x = Math.cos(d);
-		y = Math.sin(d);
+		x = (float) Math.cos(d);
+		y = (float) Math.sin(d);
 	}
 
 	public Vector2D clone() {
@@ -33,7 +33,7 @@ public class Vector2D {
 			setRandom();
 			return;
 		}
-		double r = 1 / getMagnitude() * d;
+		float r = (float) (1 / getMagnitude() * d);
 		x *= r;
 		y *= r;
 	}

@@ -121,6 +121,9 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 		if(keyHandler.pagedown.pressed){
 			screen.zoomOut();
 		}
+		if(keyHandler.equal.pressed){
+			screen.reset();
+		}
 	}
 
 	protected void render() {

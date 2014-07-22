@@ -6,27 +6,24 @@ public class Particle {
 	protected Vector2D location;
 	protected Vector2D velocity;
 	protected Vector2D acceleration;
-	protected float lifespan;
+	protected float lifespan=255;
 
 	Particle(Vector2D l) {
 		location = l.clone();
 		velocity = new Vector2D();
-		acceleration = new Vector2D();
-		lifespan = 255;
+		acceleration = new Vector2D();		
 	}
 
 	Particle(Vector2D l, Vector2D v) {
 		location = l.clone();
 		velocity = v.clone();
 		acceleration = new Vector2D();
-		lifespan = 255;
 	}
 
 	Particle(Vector2D l, Vector2D v, Vector2D a) {
 		location = l.clone();
 		velocity = v.clone();
 		acceleration = a.clone();
-		lifespan = 255;
 	}
 
 	void move() {

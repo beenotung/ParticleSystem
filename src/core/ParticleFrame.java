@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import myutils.CanvasShell;
 import myutils.Colors;
+import myutils.Utils;
 import myutils.Vector2D;
 
 public class ParticleFrame extends CanvasShell {
@@ -22,15 +23,16 @@ public class ParticleFrame extends CanvasShell {
 
 	@Override
 	protected void myTick() {
-		Vector2D l = new Vector2D(WIDTH / 2, HEIGHT / 2);
+		//Vector2D l = new Vector2D(Utils.random.nextInt(WIDTH/2), Utils.random.nextInt(HEIGHT/2));
+		Vector2D l = new Vector2D();
 		Vector2D v = new Vector2D();
 		Vector2D a = new Vector2D();
 		for (ParticleSystem ps : particleSystems) {
 			ps.checkAlive();
 			for (int i = 0; i < 100; i++) {
 				v.setRandom();
-				// v.setMagnitude(1);
-				ps.addParticle(l, v, a);
+				//v.setMagnitude(2);
+				ps.particles.add(new Particle(l, v, a));
 			}
 			ps.calc();
 		}

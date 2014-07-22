@@ -54,7 +54,7 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 		frame.setVisible(true);
 
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-		screen = new Pixels(((DataBufferInt) image.getRaster().getDataBuffer()).getData());
+		screen = new Pixels(((DataBufferInt) image.getRaster().getDataBuffer()).getData(),WIDTH,HEIGHT);
 
 		createBufferStrategy(3);
 		bufferStrategy = getBufferStrategy();
@@ -104,16 +104,22 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 
 	private void defaultKeyHandling() {
 		if (keyHandler.up.pressed) {
-			screen.yOffset++;
+			screen.scrollUp();
 		}
 		if (keyHandler.down.pressed) {
-			screen.yOffset--;
+			screen.scrollUpDown();
 		}
 		if (keyHandler.left.pressed) {
-			screen.xOffset++;
+			screen.scrollUpLeft();
 		}
 		if (keyHandler.right.pressed) {
-			screen.xOffset--;
+			screen.scrollUpRight();
+		}
+		if(keyHandler.pageup.pressed){
+			screen.zoomIn();
+		}
+		if(keyHandler.pagedown.pressed){
+			screen.zoomOut();
 		}
 	}
 

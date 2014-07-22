@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import myutils.Colors;
 import myutils.Pixels;
-import myutils.Vector2D;
-import myutils.Utils;
 
 public class ParticleSystem {
-	protected int WIDTH, HEIGHT;
+	protected int WIDTH,HEIGHT;
+	protected int xMin, yMin, xMax, yMax;
+	protected int xMin2,yMin2 ,xMax2, yMax2;
 	Pixels screen;
 
 	protected double REBOUNDRATIO = 0.90;
@@ -18,25 +18,24 @@ public class ParticleSystem {
 	public ParticleSystem(int width, int height, Pixels screen) {
 		WIDTH = width;
 		HEIGHT = height;
+		xMin = -width / 2;
+		yMin = -height / 2;
+		xMax = width / 2;
+		yMax = height / 2;
+		if (width % 2 == 0)
+			xMax--;
+		if (height % 2 == 0)
+			yMax--;
 		this.screen = screen;
+		xMin2=xMin*2;
+		yMin2=yMin*2;
+		xMax2=xMax*2;
+		yMax2=yMax*2;
 		init();
 	}
 
 	protected void init() {
-		//addParticle();
-	}
-
-	protected void addParticle(Vector2D l,Vector2D v,Vector2D a) {		
-		particles.add(new Particle(l, v, a));
-	}
-	
-	protected void addParticle() {
-		Vector2D l = new Vector2D(WIDTH / 2, HEIGHT / 2);
-		Vector2D v = new Vector2D();
-		Vector2D a = new Vector2D();
-		//l.setRandom(WIDTH, HEIGHT);
-		particles.add(new Particle(l, v, a));
-		// particles.get(particles.size()-1).lifespan=1024;
+		// addParticle();
 	}
 
 	protected void checkAlive() {
@@ -59,33 +58,34 @@ public class ParticleSystem {
 
 	protected void check_loop() {
 		for (Particle p : particles) {
-			while (p.location.x < 0)
+			while (p.location.x < xMin)
 				p.location.x += WIDTH;
-			while (p.location.x >= WIDTH)
+			
+			while (p.location.x >= xMax)
 				p.location.x -= WIDTH;
-			while (p.location.y < 0)
+			while (p.location.y < yMin)
 				p.location.y += HEIGHT;
-			while (p.location.y >= HEIGHT)
+			while (p.location.y >= yMax)
 				p.location.y -= HEIGHT;
 		}
 	}
 
 	protected void check_rebound() {
 		for (Particle p : particles) {
-			if (p.location.x < 0) {
-				p.location.x *= -1;
+			if (p.location.x < xMin) {
+				p.location.x =xMin2-p.location.x;
 				p.velocity.x *= -REBOUNDRATIO;
 			}
-			if (p.location.x >= (WIDTH - 1)) {
-				p.location.x -= p.location.x - (WIDTH - 1);
-				p.velocity.x *= -REBOUNDRATIO;
-			}
-			if (p.location.y < 0) {
-				p.location.y *= -1;
+			if (p.location.y < yMin) {
+				p.location.y =yMin2-p.location.y;
 				p.velocity.y *= -REBOUNDRATIO;
 			}
-			if (p.location.y >= (HEIGHT - 1)) {
-				p.location.y -= p.location.y - (HEIGHT - 1);
+			if (p.location.x >= (xMax - 1)) {
+				p.location.x =xMax2-p.location.x;
+				p.velocity.x *= -REBOUNDRATIO;
+			}			
+			if (p.location.y >= (yMax - 1)) {
+				p.location.y =yMax2-p.location.y;
 				p.velocity.y *= -REBOUNDRATIO;
 			}
 		}
@@ -94,14 +94,7 @@ public class ParticleSystem {
 	protected void display() {
 		int x, y;
 		for (Particle p : particles) {
-			x = (int) Math.round(Math.floor(p.location.x)) + screen.xOffset;
-			y = (int) Math.round(Math.floor(p.location.y)) + screen.yOffset;
-			/*
-			 * while (x<0)x+=WIDTH; while (y<0)y+=HEIGHT; while
-			 * (x>=WIDTH)x-=WIDTH; while (y>=HEIGHT)y-=HEIGHT;
-			 */
-			if (Pixels.inside(x, y, 0, 0, WIDTH - 1, HEIGHT - 1))
-				screen.pixels[x + y * WIDTH] = Colors.get(1, 0, 0);
+			screen.add(p.location, Colors.get(1, 0, 0));
 		}
 	}
 }

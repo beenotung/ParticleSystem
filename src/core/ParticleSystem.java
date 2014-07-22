@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import myutils.Colors;
 import myutils.Pixels;
+import myutils.Vector2D;
 
 public class ParticleSystem {
 	protected int WIDTH,HEIGHT;
@@ -14,8 +15,9 @@ public class ParticleSystem {
 	protected double REBOUNDRATIO = 0.90;
 
 	protected ArrayList<Particle> particles = new ArrayList<Particle>();
+	private Vector2D mouseLocation;
 
-	public ParticleSystem(int width, int height, Pixels screen) {
+	public ParticleSystem(int width, int height, Pixels screen, Vector2D mouseLocation) {
 		WIDTH = width;
 		HEIGHT = height;
 		xMin = -width / 2;
@@ -31,6 +33,7 @@ public class ParticleSystem {
 		yMin2=yMin*2;
 		xMax2=xMax*2;
 		yMax2=yMax*2;
+		this.mouseLocation = mouseLocation;
 		init();
 	}
 
@@ -47,6 +50,7 @@ public class ParticleSystem {
 	protected void calc() {
 		for (Particle p : particles) {
 			// p.acceleration.setRandom();
+			p.acceleration=mouseLocation.subtract(p.location);
 		}
 	}
 
@@ -93,7 +97,7 @@ public class ParticleSystem {
 
 	protected void display() {		
 		for (Particle p : particles) {
-			screen.add(p.location, Colors.get(1, 0, 0));
+			screen.add(p.location, Colors.get(0.75, 0.75 ,0.2));
 		}
 	}
 }

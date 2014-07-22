@@ -42,8 +42,19 @@ public class Vector2D {
 		setMagnitude(1);
 	}
 
-	public void add(Vector2D pv) {
+	public void plus(Vector2D pv) {
 		x += pv.x;
 		y += pv.y;
 	}
+	public void minus(Vector2D pv) {
+		x -= pv.x;
+		y -= pv.y;
+	}
+	public Vector2D add(Vector2D pv) {
+	return new Vector2D(x+pv.x,y+pv.y);
+	}
+	public Vector2D subtract(Vector2D pv) {
+		return new Vector2D(x-pv.x,y-pv.y);
+	}
+	
 }

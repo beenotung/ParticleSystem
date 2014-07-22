@@ -27,8 +27,8 @@ public class Particle {
 	}
 
 	void move() {
-		velocity.add(acceleration);
-		location.add(velocity);
+		velocity.plus(acceleration);
+		location.plus(velocity);
 		lifespan -= 2.0;
 	}
 

@@ -14,8 +14,8 @@ public class ParticleFrame extends CanvasShell {
 
 	protected ArrayList<ParticleSystem> particleSystems = new ArrayList<ParticleSystem>();
 
-	public ParticleFrame(int width, int height, int scale, String title, double nsPerTick, double nsPerRender,
-			int nParticle) {
+	public ParticleFrame(int width, int height, int scale, String title, double nsPerTick,
+			double nsPerRender, int nParticle) {
 		super(width, height, scale, title, nsPerTick, nsPerRender);
 		this.nParticle = nParticle;
 	}
@@ -33,10 +33,12 @@ public class ParticleFrame extends CanvasShell {
 		Vector2D v = new Vector2D();
 		Vector2D a = new Vector2D();
 		for (ParticleSystem ps : particleSystems) {
-			// ps.checkAlive();
+			ps.checkAlive();
 			for (int i = 0; i < nParticle; i++) {
-				v.setRandom();
-				v.setMagnitude(Utils.random.nextDouble());
+				//v.setRandom();
+				//v.setMagnitude(Utils.random.nextDouble());
+				 l.x = Utils.random.nextInt(WIDTH) - cx;
+				 l.y = Utils.random.nextInt(HEIGHT) - cy;
 				ps.particles.add(new Particle(l, v, a));
 			}
 			ps.calc();
@@ -46,13 +48,13 @@ public class ParticleFrame extends CanvasShell {
 		}
 		for (ParticleSystem ps : particleSystems) {
 			// ps.check_loop();
-			//ps.check_rebound();
+			// ps.check_rebound();
 		}
 	}
 
 	@Override
 	protected void myRender() {
-		screen.clear(Colors.get(0, 0, 0));
+		screen.clear(Colors.get(53f/255f, 0, 78f/255f));
 		for (ParticleSystem ps : particleSystems) {
 			ps.display();
 		}
@@ -78,7 +80,7 @@ public class ParticleFrame extends CanvasShell {
 	}
 
 	private void reset() {
-		particleSystems.set(0,new ParticleSystem(screen, mouseLocationRelative));		
+		particleSystems.set(0, new ParticleSystem(screen, mouseLocationRelative));
 	}
 
 }

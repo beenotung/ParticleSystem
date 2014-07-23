@@ -141,13 +141,13 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 			screen.scrollUp();
 		}
 		if (keyHandler.down.pressed) {
-			screen.scrollUpDown();
+			screen.scrollDown();
 		}
 		if (keyHandler.left.pressed) {
-			screen.scrollUpLeft();
+			screen.scrollLeft();
 		}
 		if (keyHandler.right.pressed) {
-			screen.scrollUpRight();
+			screen.scrollRight();
 		}
 		if (keyHandler.pageup.pressed) {
 			screen.zoom(1);
@@ -161,7 +161,7 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 		myKeyHandling();
 	}
 
-	private void defaultMouseHandling() {
+	private void defaultMouseHandling() { 
 		if (mouseHandler.right.clicked) {
 			screen.setOffset(mouseHandler.right.x, mouseHandler.right.y);
 			mouseHandler.right.clicked = false;

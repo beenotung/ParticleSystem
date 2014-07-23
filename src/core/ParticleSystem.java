@@ -10,15 +10,15 @@ public class ParticleSystem {
 	protected int xMin, yMin, xMax, yMax;
 	protected int xMin2, yMin2, xMax2, yMax2;
 	private Pixels screen;
-	private Vector2D mouseLocation;
+	private Vector2D mouseLocationRelative;
 
 	protected double REBOUNDRATIO = 0.90;
 
 	protected ArrayList<Particle> particles = new ArrayList<Particle>();
 
-	public ParticleSystem(Pixels screen, Vector2D mouseLocation) {
+	public ParticleSystem(Pixels screen, Vector2D mouseLocationRelative) {
 		this.screen = screen;
-		this.mouseLocation = mouseLocation;
+		this.mouseLocationRelative = mouseLocationRelative;
 		xMin = -screen.WIDTH / 2;
 		yMin = -screen.HEIGHT / 2;
 		xMax = screen.WIDTH / 2;
@@ -47,7 +47,9 @@ public class ParticleSystem {
 	protected void calc() {
 		for (Particle p : particles) {
 			// p.acceleration.setRandom();
-			p.acceleration = Vector2D.subtract(Vector2D.times(mouseLocation, 1/screen.scale), p.location);
+			p.acceleration = Vector2D.subtract(Vector2D.times(mouseLocationRelative, 1/screen.scale), p.location);
+			//p.acceleration .plus( Vector2D.subtract(Vector2D.times(mouseLocationRelative, 1/screen.scale*0.8f), p.location));
+			//System.out.println(mouseLocationRelative.x+", "+mouseLocationRelative.x);
 			p.acceleration.max(1);
 			// p.velocity.plus(Vector2D.subtract(mouseLocation,p.location));
 		}
@@ -95,7 +97,7 @@ public class ParticleSystem {
 
 	protected void display() {
 		for (Particle p : particles) {
-			screen.add(p.location, Colors.get(0, 1, 1));
+			screen.add(p.location, Colors.get(1f, 244f/255f, 234f/255f));
 		}
 	}
 }

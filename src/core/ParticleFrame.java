@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import myutils.CanvasShell;
 import myutils.Colors;
+import myutils.Utils;
 import myutils.Vector2D;
 
 public class ParticleFrame extends CanvasShell {
@@ -35,7 +36,7 @@ public class ParticleFrame extends CanvasShell {
 			ps.checkAlive();
 			for (int i = 0; i < nParticle; i++) {
 				v.setRandom();
-				// v.setMagnitude(2);
+				 v.setMagnitude(Utils.random.nextDouble()*10);
 				ps.particles.add(new Particle(l, v, a));
 			}
 			ps.calc();
@@ -51,7 +52,7 @@ public class ParticleFrame extends CanvasShell {
 
 	@Override
 	protected void myRender() {
-		screen.clear(Colors.get(0.25, 0.5 ,0.8));
+		screen.clear(Colors.get(0,0,0));
 		for (ParticleSystem ps : particleSystems) {
 			ps.display();
 		}

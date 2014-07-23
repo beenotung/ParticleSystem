@@ -97,7 +97,7 @@ public class ParticleSystem {
 
 	protected void display() {		
 		for (Particle p : particles) {
-			screen.add(p.location, Colors.get(0.75, 0.75 ,0.2));
+			screen.add(p.location, Colors.get(0, 1 ,1));
 		}
 	}
 }

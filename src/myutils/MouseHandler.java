@@ -60,10 +60,8 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		canvasShell.mouseLocationRelative.x = canvasShell.mouseLocationOnScreen.x = e.getX();
-		canvasShell.mouseLocationRelative.y = canvasShell.mouseLocationOnScreen.y = e.getY();
-		canvasShell.mouseLocationRelative.x -= canvasShell.cx;
-		canvasShell.mouseLocationRelative.y -= canvasShell.cy;
+		convertOnScreen(canvasShell.mouseLocationOnScreen, e.getX(), e.getY());
+		convertRelative(canvasShell.mouseLocationRelative, e.getX(), e.getY());
 	}
 
 	@Override
@@ -74,11 +72,13 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
 	private void toggle(int button, int x, int y, boolean isClicked) {
 		switch (button) {
 		case 1:
-			left.toggle(x - canvasShell.cx, y - canvasShell.cy, isClicked);
+			left.toggle(x, y, isClicked);
+			break;
 		case 2:
-			middle.toggle(x - canvasShell.cx, y - canvasShell.cy, isClicked);
+			middle.toggle(x, y, isClicked);
+			break;
 		case 3:
-			right.toggle(x - canvasShell.cx, y - canvasShell.cy, isClicked);
+			right.toggle(x, y, isClicked);
 			break;
 		default:
 
@@ -89,4 +89,13 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
 		amountScrolled -= unitsToScroll;
 	}
 
+	public void convertOnScreen(Vector2D v, int x, int y) {
+		v.x = x / canvasShell.SCALE - canvasShell.screen.xOffset;
+		v.y = y / canvasShell.SCALE - canvasShell.screen.yOffset;
+	}
+
+	public void convertRelative(Vector2D v, int x, int y) {
+		v.x = x / canvasShell.SCALE - canvasShell.cx - canvasShell.screen.xOffset;
+		v.y = y / canvasShell.SCALE - canvasShell.cy - canvasShell.screen.yOffset;
+	}
 }

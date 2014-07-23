@@ -36,15 +36,15 @@ public class Pixels {
 		yOffset += 1 / scale;
 	}
 
-	public void scrollUpDown() {
+	public void scrollDown() {
 		yOffset -= 1 / scale;
 	}
 
-	public void scrollUpLeft() {
+	public void scrollLeft() {
 		xOffset += 1 / scale;
 	}
 
-	public void scrollUpRight() {
+	public void scrollRight() {
 		xOffset -= 1 / scale;
 	}
 

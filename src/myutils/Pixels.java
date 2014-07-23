@@ -3,7 +3,7 @@ package myutils;
 public class Pixels {
 	public int[] pixels;
 	public int WIDTH, HEIGHT;
-	public int WIDTHh, HEIGHTh;
+	public int cx, cy;
 	public float scale, xOffset, yOffset;
 	final float DEFAULTZOOMRATE = 1.05f;
 
@@ -11,14 +11,14 @@ public class Pixels {
 		this.pixels = p;
 		WIDTH = width;
 		HEIGHT = height;
-		WIDTHh = WIDTH / 2;
-		HEIGHTh = HEIGHT / 2;
+		cx = WIDTH / 2;
+		cy = HEIGHT / 2;
 		reset();
 	}
 
 	public void add(Vector2D l, int i) {
-		int x = (int) Math.round((l.x + xOffset) * scale) + WIDTHh;
-		int y = (int) Math.round((l.y + yOffset) * scale) + HEIGHTh;
+		int x = (int) Math.round((l.x + xOffset) * scale) + cx;
+		int y = (int) Math.round((l.y + yOffset) * scale) + cy;
 		if (inside(x, y, 0, 0, WIDTH - 1, HEIGHT - 1))
 			pixels[x + y * WIDTH] = i;
 	}

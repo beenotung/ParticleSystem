@@ -50,7 +50,7 @@ public class ParticleSystem {
 	protected void calc() {
 		for (Particle p : particles) {
 			// p.acceleration.setRandom();
-			p.acceleration=mouseLocation.subtract(p.location);
+			p.acceleration=Vector2D.subtract(mouseLocation,p.location);
 		}
 	}
 

@@ -46,15 +46,18 @@ public class Vector2D {
 		x += pv.x;
 		y += pv.y;
 	}
+
 	public void minus(Vector2D pv) {
 		x -= pv.x;
 		y -= pv.y;
 	}
-	public Vector2D add(Vector2D pv) {
-	return new Vector2D(x+pv.x,y+pv.y);
+
+	public static Vector2D add(Vector2D p1, Vector2D p2) {
+		return new Vector2D(p1.x + p2.x, p1.y + p2.y);
 	}
-	public Vector2D subtract(Vector2D pv) {
-		return new Vector2D(x-pv.x,y-pv.y);
+
+	public static Vector2D subtract(Vector2D p1, Vector2D p2) {
+		return new Vector2D(p1.x - p2.x, p1.y - p2.y);
 	}
-	
+
 }

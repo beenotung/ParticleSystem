@@ -83,7 +83,7 @@ public class ParticleSystem {
 			if (p.location.y < yMin) {
 				p.location.y =yMin2-p.location.y;
 				p.velocity.y *= -REBOUNDRATIO;
-			}
+			} 
 			if (p.location.x >= (xMax - 1)) {
 				p.location.x =xMax2-p.location.x;
 				p.velocity.x *= -REBOUNDRATIO;

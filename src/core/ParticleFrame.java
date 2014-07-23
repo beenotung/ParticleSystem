@@ -22,7 +22,7 @@ public class ParticleFrame extends CanvasShell {
 
 	@Override
 	protected void init() {
-		particleSystems.add(new ParticleSystem(WIDTH, HEIGHT, screen, mouseLocation));
+		particleSystems.add(new ParticleSystem(screen, mouseLocationRelative));
 	}
 
 	@Override
@@ -33,10 +33,10 @@ public class ParticleFrame extends CanvasShell {
 		Vector2D v = new Vector2D();
 		Vector2D a = new Vector2D();
 		for (ParticleSystem ps : particleSystems) {
-			ps.checkAlive();
+			// ps.checkAlive();
 			for (int i = 0; i < nParticle; i++) {
 				v.setRandom();
-				 v.setMagnitude(Utils.random.nextDouble()*10);
+				v.setMagnitude(Utils.random.nextDouble());
 				ps.particles.add(new Particle(l, v, a));
 			}
 			ps.calc();
@@ -46,13 +46,13 @@ public class ParticleFrame extends CanvasShell {
 		}
 		for (ParticleSystem ps : particleSystems) {
 			// ps.check_loop();
-			ps.check_rebound();
+			//ps.check_rebound();
 		}
 	}
 
 	@Override
 	protected void myRender() {
-		screen.clear(Colors.get(0,0,0));
+		screen.clear(Colors.get(0, 0, 0));
 		for (ParticleSystem ps : particleSystems) {
 			ps.display();
 		}
@@ -62,6 +62,23 @@ public class ParticleFrame extends CanvasShell {
 	protected void myDebugInfo() {
 		// TODO Auto-generated method stub
 		// System.out.println(particleSystems.get(0).particles.size());
+	}
+
+	@Override
+	protected void myKeyHandling() {
+		if (keyHandler.r.pressed) {
+			reset();
+		}
+	}
+
+	@Override
+	protected void myMouseHandling() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void reset() {
+		particleSystems.set(0,new ParticleSystem(screen, mouseLocationRelative));		
 	}
 
 }

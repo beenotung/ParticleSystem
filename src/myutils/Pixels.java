@@ -1,26 +1,22 @@
 package myutils;
 
 public class Pixels {
-	public int[] pixels;
-	public int WIDTH, HEIGHT;
-	public int cx, cy;
+	protected int[] pixels;
 	public float scale, xOffset, yOffset;
-	final float DEFAULTZOOMRATE = 1.05f;
+	private final float DEFAULTZOOMRATE = 1.05f;
+	public CanvasShell canvasShell;
 
-	Pixels(int[] p, int width, int height) {
+	Pixels(int[] p, CanvasShell canvasShell) {
 		this.pixels = p;
-		WIDTH = width;
-		HEIGHT = height;
-		cx = WIDTH / 2;
-		cy = HEIGHT / 2;
-		reset();
+		this.canvasShell = canvasShell;
+		resetOffsetScale();
 	}
 
 	public void add(Vector2D l, int i) {
-		int x = (int) Math.round((l.x +- xOffset) * scale) + cx;
-		int y = (int) Math.round((l.y - yOffset) * scale) + cy;
-		if (inside(x, y, 0, 0, WIDTH - 1, HEIGHT - 1))
-			pixels[x + y * WIDTH] = i;
+		int x = (int) Math.round((l.x + -xOffset) * scale + canvasShell.cx);
+		int y = (int) Math.round((l.y - yOffset) * scale + canvasShell.cy);
+		if (inside(x, y, 0, 0, canvasShell.WIDTH - 1, canvasShell.HEIGHT - 1))
+			pixels[x + y * canvasShell.WIDTH] = i;
 	}
 
 	public void clear(int c) {
@@ -52,14 +48,26 @@ public class Pixels {
 		scale *= Math.pow(DEFAULTZOOMRATE, r);
 	}
 
-	public void reset() {
+	public void resetOffsetScale() {
 		xOffset = 0;
 		yOffset = 0;
 		scale = 1;
 	}
 
-	public void setOffset(int x, int y) {
-		xOffset -= x/scale/Math.PI;
-		yOffset -= y/scale/Math.PI;		
+	public void setOffset(Vector2D locationRelative) {
+		xOffset = locationRelative.x ;//* Math.PI;// scale;//Math.PI;
+		yOffset= locationRelative.y ;//* Math.PI;// scale;//Math.PI;
 	}
+	
+	public void convertOnScreen(Vector2D v, int x, int y) {
+		v.x = x / scale-canvasShell.cx;
+		v.y = y / scale-canvasShell.cy;
+	}
+
+	public void convertRelative(Vector2D v, int x, int y) {		
+		v.x = (x - canvasShell.cx) / scale + xOffset;
+		v.y = (y - canvasShell.cy) / scale + yOffset;		
+	}
+
+	
 }

@@ -22,7 +22,7 @@ public class ParticleFrame extends CanvasShell {
 
 	@Override
 	protected void init() {
-		particleSystems.add(new ParticleSystem(screen, mouseLocationRelative));
+		particleSystems.add(new ParticleSystem( this));
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class ParticleFrame extends CanvasShell {
 	}
 
 	private void reset() {
-		particleSystems.set(0, new ParticleSystem(screen, mouseLocationRelative));
+		particleSystems.set(0, new ParticleSystem(this));
 	}
 
 }

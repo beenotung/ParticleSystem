@@ -18,8 +18,8 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 	protected int ticks = 0;
 	protected int renders = 0;
 
-	protected int WIDTH, HEIGHT, SCALE;
-	protected float cx, cy;
+	public int WIDTH, HEIGHT, SCALE;
+	public float cx,cy;
 	protected String TITLE;
 	protected double nsPerTick, nsPerRender;
 	protected int background = Colors.get(0, 0, 0);
@@ -28,18 +28,18 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 	protected Graphics graphics;
 	protected BufferStrategy bufferStrategy;
 	protected BufferedImage image;
-	protected Pixels screen;
+	public Pixels screen;
 	protected int x, y, xPos, yPos;
 
-	protected KeyHandler keyHandler;
-	protected MouseHandler mouseHandler;
-	protected Vector2D mouseLocationOnScreen, mouseLocationRelative;
+	public  KeyHandler keyHandler;
+	public  MouseHandler mouseHandler;
+	
 
 	public CanvasShell(int width, int height, int scale, String title, double nsPerTick, double nsPerRender) {
 		WIDTH = width / scale;
 		HEIGHT = height / scale;
-		cx = WIDTH / 2;
-		cy = HEIGHT / 2;
+		cx=WIDTH/2f;
+		cy=HEIGHT/2f;
 		SCALE = scale;
 		TITLE = title;
 		this.nsPerTick = nsPerTick;
@@ -59,15 +59,13 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 		frame.setVisible(true);
 
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-		screen = new Pixels(((DataBufferInt) image.getRaster().getDataBuffer()).getData(), WIDTH, HEIGHT);
+		screen = new Pixels(((DataBufferInt) image.getRaster().getDataBuffer()).getData(), this);
 
 		createBufferStrategy(3);
 		bufferStrategy = getBufferStrategy();
 		graphics = bufferStrategy.getDrawGraphics();
 
-		keyHandler = new KeyHandler(this);
-		mouseLocationOnScreen = new Vector2D(WIDTH / 2, HEIGHT / 2);
-		mouseLocationRelative = new Vector2D();
+		keyHandler = new KeyHandler(this);		
 		mouseHandler = new MouseHandler(this);
 	}
 
@@ -156,14 +154,14 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 			screen.zoom(-1);
 		}
 		if (keyHandler.equal.pressed) {
-			screen.reset();
+			screen.resetOffsetScale();
 		}
 		myKeyHandling();
 	}
 
 	private void defaultMouseHandling() {
-		if (mouseHandler.right.clicked) {
-			screen.setOffset(mouseHandler.right.x, mouseHandler.right.y);
+		if (mouseHandler.right.clicked) {			
+			screen.setOffset(mouseHandler.right.locationRelative);
 			mouseHandler.right.clicked = false;
 		}
 		if (mouseHandler.amountScrolled != 0) {

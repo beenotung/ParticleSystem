@@ -28,20 +28,12 @@ public class Pixels {
 		return (x >= xMin) && (x <= xMax) && (y >= yMin) && (y <= yMax);
 	}
 
-	public void scrollUp() {
-		yOffset -= 1 / scale;
+	public void scrollX(int numTimesPressed) {
+		xOffset += numTimesPressed / scale * Math.PI;
 	}
 
-	public void scrollDown() {
-		yOffset += 1 / scale;
-	}
-
-	public void scrollLeft() {
-		xOffset -= 1 / scale;
-	}
-
-	public void scrollRight() {
-		xOffset += 1 / scale;
+	public void scrollY(int numTimesPressed) {
+		yOffset += numTimesPressed / scale * Math.PI;
 	}
 
 	public void zoom(int r) {
@@ -55,19 +47,18 @@ public class Pixels {
 	}
 
 	public void setOffset(Vector2D locationRelative) {
-		xOffset = locationRelative.x ;//* Math.PI;// scale;//Math.PI;
-		yOffset= locationRelative.y ;//* Math.PI;// scale;//Math.PI;
+		xOffset = locationRelative.x;// * Math.PI;// scale;//Math.PI;
+		yOffset = locationRelative.y;// * Math.PI;// scale;//Math.PI;
 	}
-	
+
 	public void convertOnScreen(Vector2D v, int x, int y) {
-		v.x = x / scale-canvasShell.cx;
-		v.y = y / scale-canvasShell.cy;
+		v.x = x / scale - canvasShell.cx;
+		v.y = y / scale - canvasShell.cy;
 	}
 
-	public void convertRelative(Vector2D v, int x, int y) {		
+	public void convertRelative(Vector2D v, int x, int y) {
 		v.x = (x - canvasShell.cx) / scale + xOffset;
-		v.y = (y - canvasShell.cy) / scale + yOffset;		
+		v.y = (y - canvasShell.cy) / scale + yOffset;
 	}
 
-	
 }

@@ -136,19 +136,29 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 			stop();
 		}
 		if (keyHandler.up.pressed) {
-			screen.scrollUp();
+			screen.scrollY(-1);
+			//screen.scrollY(-keyHandler.up.numTimesPressed);
+			//keyHandler.up.numTimesPressed=0;
 		}
 		if (keyHandler.down.pressed) {
-			screen.scrollDown();
+			screen.scrollY(1);
+			//screen.scrollY(keyHandler.down.numTimesPressed);
+			//keyHandler.down.numTimesPressed=0;
 		}
 		if (keyHandler.left.pressed) {
-			screen.scrollLeft();
+			screen.scrollX(-1);
+		//	screen.scrollX(-keyHandler.left.numTimesPressed);
+			//keyHandler.left.numTimesPressed=0;
 		}
 		if (keyHandler.right.pressed) {
-			screen.scrollRight();
+			screen.scrollX(1);
+			//screen.scrollX(keyHandler.right.numTimesPressed);
+			//keyHandler.right.numTimesPressed=0;			
 		}
 		if (keyHandler.pageup.pressed) {
 			screen.zoom(1);
+			//screen.zoom(keyHandler.pageup.numTimesPressed);
+			//keyHandler.pageup.numTimesPressed=0;
 		}
 		if (keyHandler.pagedown.pressed) {
 			screen.zoom(-1);

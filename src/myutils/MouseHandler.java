@@ -90,12 +90,14 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
 	}
 
 	public void convertOnScreen(Vector2D v, int x, int y) {
-		v.x = x / canvasShell.SCALE - canvasShell.screen.xOffset;
-		v.y = y / canvasShell.SCALE - canvasShell.screen.yOffset;
+		v.x = x / canvasShell.SCALE ;//+ canvasShell.screen.xOffset;
+		v.y = y / canvasShell.SCALE ;//+ canvasShell.screen.yOffset;
 	}
 
-	public void convertRelative(Vector2D v, int x, int y) {
-		v.x = x / canvasShell.SCALE - canvasShell.cx - canvasShell.screen.xOffset;
-		v.y = y / canvasShell.SCALE - canvasShell.cy - canvasShell.screen.yOffset;
+	public void convertRelative(Vector2D v, int x, int y) {		
+		//v.x = x / canvasShell.SCALE - canvasShell.cx - canvasShell.screen.xOffset;
+		//v.y = y / canvasShell.SCALE - canvasShell.cy - canvasShell.screen.yOffset;
+		v.x = (x  - canvasShell.cx - canvasShell.screen.xOffset)/ canvasShell.SCALE;
+		v.y = (y  - canvasShell.cy - canvasShell.screen.yOffset)/ canvasShell.SCALE;
 	}
 }

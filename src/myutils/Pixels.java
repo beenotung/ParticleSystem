@@ -17,8 +17,8 @@ public class Pixels {
 	}
 
 	public void add(Vector2D l, int i) {
-		int x = (int) Math.round((l.x + xOffset) * scale) + cx;
-		int y = (int) Math.round((l.y + yOffset) * scale) + cy;
+		int x = (int) Math.round((l.x +- xOffset) * scale) + cx;
+		int y = (int) Math.round((l.y - yOffset) * scale) + cy;
 		if (inside(x, y, 0, 0, WIDTH - 1, HEIGHT - 1))
 			pixels[x + y * WIDTH] = i;
 	}
@@ -33,19 +33,19 @@ public class Pixels {
 	}
 
 	public void scrollUp() {
-		yOffset += 1 / scale;
-	}
-
-	public void scrollDown() {
 		yOffset -= 1 / scale;
 	}
 
+	public void scrollDown() {
+		yOffset += 1 / scale;
+	}
+
 	public void scrollLeft() {
-		xOffset += 1 / scale;
+		xOffset -= 1 / scale;
 	}
 
 	public void scrollRight() {
-		xOffset -= 1 / scale;
+		xOffset += 1 / scale;
 	}
 
 	public void zoom(int r) {
@@ -60,6 +60,6 @@ public class Pixels {
 
 	public void setOffset(int x, int y) {
 		xOffset -= x/scale/Math.PI;
-		yOffset -= y/scale/Math.PI;
+		yOffset -= y/scale/Math.PI;		
 	}
 }

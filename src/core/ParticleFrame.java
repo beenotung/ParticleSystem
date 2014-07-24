@@ -14,8 +14,8 @@ public class ParticleFrame extends CanvasShell {
 
 	protected ArrayList<ParticleSystem> particleSystems = new ArrayList<ParticleSystem>();
 
-	public ParticleFrame(int width, int height, int scale, String title, double nsPerTick,
-			double nsPerRender, int nParticle) {
+	public ParticleFrame(int width, int height, int scale, String title, double nsPerTick, double nsPerRender,
+			int nParticle) {
 		super(width, height, scale, title, nsPerTick, nsPerRender);
 		this.nParticle = nParticle;
 	}
@@ -35,10 +35,10 @@ public class ParticleFrame extends CanvasShell {
 		for (ParticleSystem ps : particleSystems) {
 			ps.checkAlive();
 			for (int i = 0; i < nParticle; i++) {
-				//v.setRandom();
-				//v.setMagnitude(Utils.random.nextDouble());
-				 l.x = Utils.random.nextInt(WIDTH) - cx;
-				 l.y = Utils.random.nextInt(HEIGHT) - cy;
+				// v.setRandom();
+				// v.setMagnitude(Utils.random.nextDouble());
+				l.x = Utils.random.nextInt(WIDTH) - cx;
+				l.y = Utils.random.nextInt(HEIGHT) - cy;
 				ps.particles.add(new Particle(l, v, a));
 			}
 			ps.calc();
@@ -54,7 +54,7 @@ public class ParticleFrame extends CanvasShell {
 
 	@Override
 	protected void myRender() {
-		screen.clear(Colors.get(53f/255f, 0, 78f/255f));
+		screen.clear(Colors.get(53f / 255f, 0, 78f / 255f));
 		for (ParticleSystem ps : particleSystems) {
 			ps.display();
 		}

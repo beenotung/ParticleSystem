@@ -18,7 +18,8 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 	protected int ticks = 0;
 	protected int renders = 0;
 
-	protected int WIDTH, HEIGHT, SCALE,cx,cy;	
+	protected int WIDTH, HEIGHT, SCALE;
+	protected float cx, cy;
 	protected String TITLE;
 	protected double nsPerTick, nsPerRender;
 	protected int background = Colors.get(0, 0, 0);
@@ -27,19 +28,18 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 	protected Graphics graphics;
 	protected BufferStrategy bufferStrategy;
 	protected BufferedImage image;
-	protected Pixels screen;	
+	protected Pixels screen;
 	protected int x, y, xPos, yPos;
-	
 
 	protected KeyHandler keyHandler;
 	protected MouseHandler mouseHandler;
-	protected Vector2D mouseLocationOnScreen,mouseLocationRelative;	
+	protected Vector2D mouseLocationOnScreen, mouseLocationRelative;
 
 	public CanvasShell(int width, int height, int scale, String title, double nsPerTick, double nsPerRender) {
 		WIDTH = width / scale;
 		HEIGHT = height / scale;
-		cx=WIDTH/2;
-		cy=HEIGHT/2;
+		cx = WIDTH / 2;
+		cy = HEIGHT / 2;
 		SCALE = scale;
 		TITLE = title;
 		this.nsPerTick = nsPerTick;
@@ -67,7 +67,7 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 
 		keyHandler = new KeyHandler(this);
 		mouseLocationOnScreen = new Vector2D(WIDTH / 2, HEIGHT / 2);
-		mouseLocationRelative=new Vector2D();
+		mouseLocationRelative = new Vector2D();
 		mouseHandler = new MouseHandler(this);
 	}
 
@@ -161,7 +161,7 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 		myKeyHandling();
 	}
 
-	private void defaultMouseHandling() { 
+	private void defaultMouseHandling() {
 		if (mouseHandler.right.clicked) {
 			screen.setOffset(mouseHandler.right.x, mouseHandler.right.y);
 			mouseHandler.right.clicked = false;

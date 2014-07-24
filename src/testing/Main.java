@@ -10,7 +10,7 @@ public class Main {
 		//width = 1024;
 		//height = 768;
 		int scale=1;
-		double TPS = 60D;
+		double TPS = 50D;
 		double FPS = 45D;
 		int nParticle = 512;		
 		ParticleFrame particleFrame = new ParticleFrame(width, height, scale, "Particle Frame Title V2.6.3\t-Beeno_Tung",

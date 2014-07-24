@@ -24,26 +24,26 @@ public class Vector2D {
 		return new Vector2D(x, y);
 	}
 
-	public double getMagnitude() {
-		return (Math.sqrt(x * x + y * y));
+	public float getMagnitude() {
+		return (float) (Math.sqrt(x * x + y * y));
 	}
 
-	public void setMagnitude(double d) {
+	public void setMagnitude(float d) {
 		if (getMagnitude() == 0) {
 			setRandom();
 			return;
 		}
-		float r = (float) (1 / getMagnitude() * d);
+		float r = 1f / getMagnitude() * d;
 		x *= r;
 		y *= r;
 	}
 
-	public void min(double d) {
+	public void min(float d) {
 		if (getMagnitude() < d)
 			setMagnitude(d);
 	}
 
-	public void max(double d) {
+	public void max(float d) {
 		if (getMagnitude() > d)
 			setMagnitude(d);
 	}

@@ -20,6 +20,13 @@ public class Vector2D {
 		y = (float) Math.sin(d);
 	}
 
+	public static Vector2D getRandom() {
+		double d = Utils.random.nextDouble() * 2 * Math.PI;
+		float x = (float) Math.cos(d);
+		float y = (float) Math.sin(d);
+		return new Vector2D(x, y);
+	}
+
 	public Vector2D clone() {
 		return new Vector2D(x, y);
 	}
@@ -69,20 +76,17 @@ public class Vector2D {
 		y *= pv.y;
 	}
 
+	public void multiply(float r) {
+		x *= r;
+		y *= r;
+	}
+
 	public static Vector2D add(Vector2D p1, Vector2D p2) {
 		return new Vector2D(p1.x + p2.x, p1.y + p2.y);
 	}
 
 	public static Vector2D subtract(Vector2D p1, Vector2D p2) {
 		return new Vector2D(p1.x - p2.x, p1.y - p2.y);
-	}
-
-	public static Vector2D times(Vector2D p1, Vector2D p2) {
-		return new Vector2D(p1.x * p2.x, p1.y * p2.y);
-	}
-
-	public static Vector2D times(Vector2D pv, float scale) {
-		return new Vector2D(pv.x * scale, pv.y * scale);
 	}
 
 }

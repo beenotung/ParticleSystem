@@ -4,13 +4,16 @@ import java.util.ArrayList;
 
 import myutils.CanvasShell;
 import myutils.Colors;
-import myutils.Utils;
-import myutils.Vector2D;
+import myutils.KeyHandler;
+import myutils.MouseHandler;
 
 public class ParticleFrame extends CanvasShell {
 	private static final long serialVersionUID = 1L;
 
-	private int nParticle;
+	protected final float DEFAULTSPEEDTONERATE = 1.05f;
+
+	int nParticle;
+	int DEFAULTNPARTICLEBEAM = 50;
 
 	protected ArrayList<ParticleSystem> particleSystems = new ArrayList<ParticleSystem>();
 
@@ -22,25 +25,13 @@ public class ParticleFrame extends CanvasShell {
 
 	@Override
 	protected void init() {
-		particleSystems.add(new ParticleSystem( this));
+		particleSystems.add(new ParticleSystem(this));
 	}
 
 	@Override
 	protected void myTick() {
-		// Vector2D l = new Vector2D(Utils.random.nextInt(WIDTH/2),
-		// Utils.random.nextInt(HEIGHT/2));
-		Vector2D l = new Vector2D();
-		Vector2D v = new Vector2D();
-		Vector2D a = new Vector2D();
 		for (ParticleSystem ps : particleSystems) {
-			ps.checkAlive();
-			for (int i = 0; i < nParticle; i++) {
-				// v.setRandom();
-				// v.setMagnitude(Utils.random.nextDouble());
-				l.x = Utils.random.nextInt(WIDTH) - cx;
-				l.y = Utils.random.nextInt(HEIGHT) - cy;
-				ps.particles.add(new Particle(l, v, a));
-			}
+			// ps.checkAlive();
 			ps.calc();
 		}
 		for (ParticleSystem ps : particleSystems) {
@@ -71,16 +62,40 @@ public class ParticleFrame extends CanvasShell {
 		if (keyHandler.r.pressed) {
 			reset();
 		}
+		if (keyHandler.add.pressed) {
+			particleSystems.get(0).addParticleRandom(DEFAULTNPARTICLEBEAM);
+			keyHandler.add.pressed = false;
+		}
+		if (keyHandler.subtract.pressed) {
+			particleSystems.get(0).removeParticleRandom(DEFAULTNPARTICLEBEAM);
+			keyHandler.subtract.pressed = false;
+		}
+		if (keyHandler.q.pressed) {
+			nsPerTick*= DEFAULTSPEEDTONERATE;
+			deltaTick=0;
+			//nsPerRender /= DEFAULTSPEEDTONERATE;
+			keyHandler.q.pressed = false;
+		}
+		if (keyHandler.e.pressed) {
+			nsPerTick/= DEFAULTSPEEDTONERATE;
+			deltaTick=0;
+			//nsPerRender *= DEFAULTSPEEDTONERATE;
+			keyHandler.e.pressed = false;
+		}
 	}
 
 	@Override
 	protected void myMouseHandling() {
-		// TODO Auto-generated method stub
-
+		if (mouseHandler.left.clicked) {
+			particleSystems.get(0).particles.add(new Particle(mouseHandler.left.locationRelative));
+			mouseHandler.left.clicked = false;
+		}
 	}
 
-	private void reset() {
-		particleSystems.set(0, new ParticleSystem(this));
+	private void reset() {	
+		keyHandler = new KeyHandler(this);
+		mouseHandler = new MouseHandler(this);		
+		particleSystems.set(0, new ParticleSystem(this));		
 	}
 
 }

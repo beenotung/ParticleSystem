@@ -3,6 +3,7 @@ package core;
 import java.util.ArrayList;
 
 import myutils.Colors;
+import myutils.Utils;
 import myutils.Vector2D;
 
 public class ParticleSystem {
@@ -11,11 +12,10 @@ public class ParticleSystem {
 	protected int xMin, yMin, xMax, yMax;
 	protected int xMin2, yMin2, xMax2, yMax2;
 
-	protected double REBOUNDRATIO = 0.90;
+	protected float REBOUNDRATIO = 0.90f;
+	protected float G = 6.6742e-11f;
 
 	protected ArrayList<Particle> particles = new ArrayList<Particle>();
-
-	
 
 	public ParticleSystem(ParticleFrame particleFrame) {
 		this.particleFrame = particleFrame;
@@ -36,7 +36,21 @@ public class ParticleSystem {
 	}
 
 	protected void init() {
-		// addParticle();
+		addParticleRandom(particleFrame.nParticle);
+	}
+
+	protected void addParticleRandom(int NParticleBeam) {
+		Vector2D l = new Vector2D();
+		for (int i = 0; i < NParticleBeam; i++) {
+			l.setRandom();
+			l.setMagnitude(Math.min(particleFrame.cx, particleFrame.cy) * Utils.random.nextFloat());
+			particles.add(new Particle(l));
+		}
+	}
+
+	protected void removeParticleRandom(int NParticleBeam) {
+		for (int i = 0; i < Math.min(NParticleBeam, particles.size()); i++)			
+			particles.remove(Utils.random.nextInt(particles.size()));
 	}
 
 	protected void checkAlive() {
@@ -47,20 +61,13 @@ public class ParticleSystem {
 
 	protected void calc() {
 		for (Particle p : particles) {
-			// p.acceleration.setRandom();
 			p.acceleration = Vector2D.subtract(particleFrame.mouseHandler.mouseMoved.locationRelative, p.location);
-			/*
-			 * System.out.println();
-			 * System.out.println(mouseLocationRelative.x+", "
-			 * +mouseLocationRelative.y);
-			 * System.out.println(p.location.x+", "+p.location.y);
-			 */
-			// p.acceleration .plus(
-			// Vector2D.subtract(Vector2D.times(mouseLocationRelative,
-			// 1/screen.scale*0.8f), p.location));
-			// System.out.println(mouseLocationRelative.x+", "+mouseLocationRelative.x);
-			p.acceleration.max(1);
-			// p.velocity.plus(Vector2D.subtract(mouseLocation,p.location));
+			p.acceleration.setMagnitude((float) Math.pow(p.acceleration.getMagnitude(), -2));
+			if (p.acceleration.getMagnitude() >= 1) {
+				p.acceleration.setMagnitude(0);
+				p.velocity.multiply(-1);
+			}
+			// p.acceleration.max(1);
 		}
 	}
 

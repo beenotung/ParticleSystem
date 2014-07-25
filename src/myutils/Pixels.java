@@ -40,7 +40,7 @@ public class Pixels {
 		scale *= Math.pow(DEFAULTZOOMRATE, r);
 	}
 
-	public void resetOffsetScale() {
+	protected void resetOffsetScale() {
 		xOffset = 0;
 		yOffset = 0;
 		scale = 1;

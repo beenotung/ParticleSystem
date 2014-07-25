@@ -19,9 +19,12 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 	protected int renders = 0;
 
 	public int WIDTH, HEIGHT, SCALE;
-	public float cx,cy;
+	public float cx, cy;
 	protected String TITLE;
+	protected final double DEFAULTnsPerTick, DEFAULTnsPerRender;
 	protected double nsPerTick, nsPerRender;
+	protected double deltaTick = 0;
+	protected double deltaRender = 0;
 	protected int background = Colors.get(0, 0, 0);
 
 	protected JFrame frame;
@@ -31,19 +34,20 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 	public Pixels screen;
 	protected int x, y, xPos, yPos;
 
-	public  KeyHandler keyHandler;
-	public  MouseHandler mouseHandler;
-	
+	public KeyHandler keyHandler;
+	public MouseHandler mouseHandler;
 
 	public CanvasShell(int width, int height, int scale, String title, double nsPerTick, double nsPerRender) {
 		WIDTH = width / scale;
 		HEIGHT = height / scale;
-		cx=WIDTH/2f;
-		cy=HEIGHT/2f;
+		cx = WIDTH / 2f;
+		cy = HEIGHT / 2f;
 		SCALE = scale;
 		TITLE = title;
-		this.nsPerTick = nsPerTick;
-		this.nsPerRender = nsPerRender;
+		this.DEFAULTnsPerTick = nsPerTick;
+		this.DEFAULTnsPerRender = nsPerRender;
+		this.nsPerTick = DEFAULTnsPerTick;
+		this.nsPerRender = DEFAULTnsPerRender;
 
 		setMinimumSize(new Dimension(WIDTH * SCALE / 2, HEIGHT * SCALE / 2));
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
@@ -65,7 +69,7 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 		bufferStrategy = getBufferStrategy();
 		graphics = bufferStrategy.getDrawGraphics();
 
-		keyHandler = new KeyHandler(this);		
+		keyHandler = new KeyHandler(this);
 		mouseHandler = new MouseHandler(this);
 	}
 
@@ -75,8 +79,6 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 		long last = System.nanoTime();
 		long current;
 		long debugTimer = System.currentTimeMillis();
-		double deltaTick = 0;
-		double deltaRender = 0;
 		boolean shouldRender = false;
 		while (running) {
 			current = System.nanoTime();
@@ -137,40 +139,36 @@ public abstract class CanvasShell extends Canvas implements Runnable {
 		}
 		if (keyHandler.up.pressed) {
 			screen.scrollY(-1);
-			//screen.scrollY(-keyHandler.up.numTimesPressed);
-			//keyHandler.up.numTimesPressed=0;
 		}
 		if (keyHandler.down.pressed) {
 			screen.scrollY(1);
-			//screen.scrollY(keyHandler.down.numTimesPressed);
-			//keyHandler.down.numTimesPressed=0;
 		}
 		if (keyHandler.left.pressed) {
 			screen.scrollX(-1);
-		//	screen.scrollX(-keyHandler.left.numTimesPressed);
-			//keyHandler.left.numTimesPressed=0;
 		}
 		if (keyHandler.right.pressed) {
 			screen.scrollX(1);
-			//screen.scrollX(keyHandler.right.numTimesPressed);
-			//keyHandler.right.numTimesPressed=0;			
 		}
 		if (keyHandler.pageup.pressed) {
 			screen.zoom(1);
-			//screen.zoom(keyHandler.pageup.numTimesPressed);
-			//keyHandler.pageup.numTimesPressed=0;
 		}
 		if (keyHandler.pagedown.pressed) {
 			screen.zoom(-1);
 		}
 		if (keyHandler.equal.pressed) {
 			screen.resetOffsetScale();
+			resetnsPerTickRender();
 		}
 		myKeyHandling();
 	}
 
+	protected void resetnsPerTickRender() {
+		nsPerTick=DEFAULTnsPerTick;
+		nsPerRender=DEFAULTnsPerRender;		
+	}
+
 	private void defaultMouseHandling() {
-		if (mouseHandler.right.clicked) {			
+		if (mouseHandler.right.clicked) {
 			screen.setOffset(mouseHandler.right.locationRelative);
 			mouseHandler.right.clicked = false;
 		}

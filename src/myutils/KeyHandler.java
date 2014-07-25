@@ -17,6 +17,8 @@ public class KeyHandler implements KeyListener {
 	public Key subtract = new Key();
 	public Key q = new Key();
 	public Key e = new Key();
+	public Key c = new Key();
+	public Key x = new Key();
 
 	
 	
@@ -86,6 +88,12 @@ public class KeyHandler implements KeyListener {
 			break;
 		case KeyEvent.VK_E:
 			e.toggle(isPressed);
+			break;
+		case KeyEvent.VK_C:
+			c.toggle(isPressed);
+			break;
+		case KeyEvent.VK_X:
+			x.toggle(isPressed);
 			break;
 		default:			
 			System.out.println("new keyCode" + keyCode);			

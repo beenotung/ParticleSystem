@@ -13,7 +13,7 @@ public class ParticleFrame extends CanvasShell {
 	protected final float DEFAULTSPEEDTONERATE = 1.05f;
 
 	int nParticle;
-	int DEFAULTNPARTICLEBEAM = 50;
+	int DEFAULTNPARTICLEBEAM = 1000;
 
 	protected ArrayList<ParticleSystem> particleSystems = new ArrayList<ParticleSystem>();
 
@@ -62,13 +62,15 @@ public class ParticleFrame extends CanvasShell {
 		if (keyHandler.r.pressed) {
 			reset();
 		}
-		if (keyHandler.add.pressed) {
+		if (keyHandler.add.pressed||keyHandler.c.pressed) {
 			particleSystems.get(0).addParticleRandom(DEFAULTNPARTICLEBEAM);
 			keyHandler.add.pressed = false;
+			keyHandler.c.pressed = false;
 		}
-		if (keyHandler.subtract.pressed) {
+		if (keyHandler.subtract.pressed||keyHandler.x.pressed) {
 			particleSystems.get(0).removeParticleRandom(DEFAULTNPARTICLEBEAM);
 			keyHandler.subtract.pressed = false;
+			keyHandler.x.pressed = false;
 		}
 		if (keyHandler.q.pressed) {
 			nsPerTick*= DEFAULTSPEEDTONERATE;

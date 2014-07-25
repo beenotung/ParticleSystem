@@ -38,6 +38,8 @@ public class Vector2D {
 	public void setMagnitude(float d) {
 		if (getMagnitude() == 0) {
 			setRandom();
+			x *= d;
+			y *= d;
 			return;
 		}
 		float r = 1f / getMagnitude() * d;

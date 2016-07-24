@@ -6,15 +6,19 @@ gravity simulation
    Leave the program
  - four direction arrow / wsad
   Move viewport
- - +/c
+ - +/C
    add more particles
- - -/x
+ - -/X
    remove some particles
- - q
+ - Q
    slow down
- - e
+ - E
    speed up
- - page up / mouse scroll upward
+ - Page Up / Mousewheel Scroll Upward
    zoom in
- - page down / mouse scroll downward
+ - Page Down / Mousewheel Scroll Downward
    zoom out
+ - R
+   reset the particles
+ - =
+   reset the viewport

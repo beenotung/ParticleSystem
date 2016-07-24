@@ -3,8 +3,8 @@ gravity simulation
 
 ## Keys & Mousewheel
 
-| Key                                   | function                  |
-|-------------------------------------------------------------------|
+| Key                                   | Function                  |
+|:-------------------------------------:|---------------------------|
 | Esc                                   | Leave the program         |
 | Arrow / WSAD                          | move viewport             |
 | + / C                                 | add 1000 particles        |

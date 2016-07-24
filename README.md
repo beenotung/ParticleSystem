@@ -1,24 +1,17 @@
 # ParticleSystem
 gravity simulation
 
-## keys & mousewheel
- - Esc
-   Leave the program
- - four direction arrow / wsad
-  Move viewport
- - +/C
-   add more particles
- - -/X
-   remove some particles
- - Q
-   slow down
- - E
-   speed up
- - Page Up / Mousewheel Scroll Upward
-   zoom in
- - Page Down / Mousewheel Scroll Downward
-   zoom out
- - R
-   reset the particles
- - =
-   reset the viewport
+## Keys & Mousewheel
+
+| Key                                   | function                  |
+|-------------------------------------------------------------------|
+| Esc                                   | Leave the program         |
+| Arrow / WSAD                          | move viewport             |
+| + / C                                 | add 1000 particles        |
+| - / X                                 | remove 1000 particles     |
+| E                                     | speed up the time pass    |
+| Q                                     | slow down the time pass   |
+| Page Up / Mousewheel Scroll Upward    | zoom in the viewport      |
+| Page Down / Mousewhell Scroll Downward| zoom out the viewport     |
+| R                                     | reset the particles       |
+| =                                     | reset the viewport        |
